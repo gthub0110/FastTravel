@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FastTravel - Home</title>
+    <style>
+        :root {
+            --gold: #FFD700;
+            --dark-gold: #B8860B;
+            --black: #000000;
+        }
+
+        body {
+            background-color: var(--black);
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated Bubbles */
+        .bubbles {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            top: 0;
+            left: 0;
+        }
+
+        .bubble {
+            position: absolute;
+            bottom: -100px;
+            width: 40px;
+            height: 40px;
+            background: var(--gold);
+            border-radius: 50%;
+            opacity: 0.15;
+            animation: rise 15s infinite ease-in;
+            box-shadow: 0 0 10px var(--gold),
+                       inset 0 0 10px var(--gold);
+        }
+
+        .bubble:nth-child(1) { left: 10%; animation-duration: 8s; width: 30px; height: 30px; }
+        .bubble:nth-child(2) { left: 20%; animation-duration: 12s; animation-delay: 1s; width: 45px; height: 45px; }
+        .bubble:nth-child(3) { left: 35%; animation-duration: 10s; animation-delay: 2s; width: 25px; height: 25px; }
+        .bubble:nth-child(4) { left: 50%; animation-duration: 15s; animation-delay: 0s; width: 35px; height: 35px; }
+        .bubble:nth-child(5) { left: 65%; animation-duration: 9s; animation-delay: 3s; width: 40px; height: 40px; }
+        .bubble:nth-child(6) { left: 80%; animation-duration: 11s; animation-delay: 4s; width: 28px; height: 28px; }
+        .bubble:nth-child(7) { left: 90%; animation-duration: 13s; animation-delay: 2s; width: 42px; height: 42px; }
+
+        @keyframes rise {
+            0% {
+                bottom: -100px;
+                transform: translateX(0);
+            }
+            50% {
+                transform: translateX(100px);
+            }
+            100% {
+                bottom: 1080px;
+                transform: translateX(-100px);
+            }
+        }
+
+        /* Header Styles */
+        .main-header {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .main-nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--gold);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .nav-link:hover {
+            color: var(--dark-gold);
+        }
+
+        /* User Profile Dropdown */
+        .user-profile {
+            position: relative;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--gold);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .dropdown-content {
+            position: absolute;
+            top: 120%;
+            right: 0;
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 15px;
+            width: 250px;
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.2);
+            backdrop-filter: blur(10px);
+            display: none;
+        }
+
+        .user-profile:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content a {
+            color: var(--gold);
+            padding: 12px 20px;
+            text-decoration: none;
+            display: block;
+            transition: all 0.3s;
+        }
+
+        .dropdown-content a:hover {
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 100px;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .welcome-card {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 15px;
+            padding: 2.5rem;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.2);
+        }
+
+        .welcome-text {
+            color: var(--gold);
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+
+        .subtitle {
+            color: var(--dark-gold);
+            margin-bottom: 2rem;
+        }
+
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .action-btn {
+            background: linear-gradient(45deg, var(--dark-gold), var(--gold));
+            color: var(--black);
+            padding: 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .logout-btn {
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+        }
+    </style>
+</head>
+<body>
+    <div class="bubbles">
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+    </div>
+
+    <header class="main-header">
+        <nav class="main-nav">
+            <div class="logo">
+                <h1 style="color: var(--gold)">Fast<span style="color: var(--dark-gold)">Travel</span></h1>
+            </div>
+            <div class="nav-links">
+                <a href="#Home" class="nav-link">Home</a>
+                <a href="#contact" class="nav-link">Contact</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#services" class="nav-link">Services</a>
+                <div class="user-profile">
+                    <img src="/images/default-avatar.png" alt="Profile" class="avatar">
+                    <div class="dropdown-content">
+                        <a href="profile.html">My Profile</a>
+                        <a href="my-bookings.html">My Bookings</a>
+                        <a href="settings.html">Settings</a>
+                        <a href="logout.html" class="logout-btn">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="welcome-card">
+            <h2 class="welcome-text">Welcome back, [Username]</h2>
+            <p class="subtitle">Premium Car Rental & Sales</p>
+            <div class="quick-actions">
+                <a href="buy_cars.html" class="action-btn">Browse Cars</a>
+                <a href="rent.html" class="action-btn">Rent a Car</a>
+                <a href="sell.html" class="action-btn">Sell Your Car</a>
+            </div>
+        </div>
+    </main>
+</body>
+</html> 
